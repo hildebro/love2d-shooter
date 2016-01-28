@@ -1,7 +1,7 @@
 debug = true
 
 --player stats
-player = {x = 200, y = 510, speed = 150, img = nil}
+player = {x = 200, y = 510, speed = 225, img = nil}
 isAlive = true
 score = 0
 
@@ -28,6 +28,7 @@ end
 
 --load assets
 function love.load(arg)
+  gunshot = love.audio.newSource('assets/gun-sound.wav', "static")
 	player.img = love.graphics.newImage('assets/plane.png')
 	bulletImg = love.graphics.newImage('assets/bullet.png')
 	enemyImg = love.graphics.newImage('assets/enemy.png')
@@ -48,12 +49,20 @@ function love.update(dt)
 --movement
 	if love.keyboard.isDown('left', 'a') then
 		if player.x > 0 then
-			player.x = player.x - (1.5*player.speed*dt)
+			player.x = player.x - (player.speed*dt)
 		end
 	elseif love.keyboard.isDown('right', 'd') then
 		if player.x < (love.graphics:getWidth() - player.img:getWidth()) then
-			player.x = player.x + (1.5*player.speed*dt)
+			player.x = player.x + (player.speed*dt)
 		end
+  elseif love.keyboard.isDown('up', 'w') then
+    if player.y > (love.graphics:getHeight()/2) then
+      player.y = player.y - (player.speed*dt)
+    end
+  elseif love.keyboard.isDown('down', 's') then
+    if player.y < (love.graphics:getHeight() - player.img:getHeight()) then
+      player.y = player.y + (player.speed*dt)
+    end
 	end
 
 --shooting
@@ -62,6 +71,7 @@ if love.keyboard.isDown(' ', 'rctrl', 'lctrl', 'ctrl') and canShoot and isAlive 
 	table.insert(bullets, newBullet)
 	canShoot = false
 	canShootTimer = canShootTimerMax
+  gunshot:play()
 end
 
 --bullet movement and cleanup
