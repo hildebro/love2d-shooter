@@ -37,7 +37,10 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 end
 
 function love.load(arg)
+<<<<<<< HEAD
   --load assets
+=======
+>>>>>>> origin/master
   gunshot = love.audio.newSource('assets/gun-sound.wav', "static")
 	player.img = love.graphics.newImage('assets/plane.png')
   boss.img = love.graphics.newImage('assets/boss.png')
@@ -82,6 +85,7 @@ function love.update(dt)
     end
 	end
 
+<<<<<<< HEAD
   --shooting
   if love.keyboard.isDown(' ', 'rctrl', 'lctrl', 'ctrl') and canShoot and isAlive then
   	newBullet = { x = player.x + (player.img:getWidth()/2), y = player.y, img = bulletImg}
@@ -99,6 +103,16 @@ function love.update(dt)
 	  canShootTimerBoss = canShootTimerMaxBoss
     gunshot:play()
   end
+=======
+--shooting
+if love.keyboard.isDown(' ', 'rctrl', 'lctrl', 'ctrl') and canShoot and isAlive then
+	newBullet = { x = player.x + (player.img:getWidth()/2), y = player.y, img = bulletImg }
+	table.insert(bullets, newBullet)
+	canShoot = false
+	canShootTimer = canShootTimerMax
+  gunshot:play()
+end
+>>>>>>> origin/master
 
   --bullet movement and cleanup
 	for i, bullet in ipairs(bullets) do
